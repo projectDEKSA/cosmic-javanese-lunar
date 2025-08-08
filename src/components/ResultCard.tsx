@@ -36,7 +36,7 @@ export const ResultCard = ({ result, isLoading = false }: ResultCardProps) => {
 
   if (isLoading) {
     return (
-      <div className="glass-card p-8 rounded-2xl animate-fade-in-up">
+      <div className="rounded-2xl border bg-background p-8 animate-fade-in-up">
         <div className="animate-pulse space-y-4">
           <div className="h-6 bg-muted rounded w-3/4"></div>
           <div className="h-4 bg-muted rounded w-1/2"></div>
@@ -51,7 +51,7 @@ export const ResultCard = ({ result, isLoading = false }: ResultCardProps) => {
 
   if (!result) {
     return (
-      <div className="glass-card p-8 rounded-2xl text-center animate-fade-in-up">
+      <div className="rounded-2xl border bg-background p-8 text-center animate-fade-in-up">
         <div className="text-muted-foreground">
           <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
             <span className="text-2xl">🌙</span>
@@ -63,7 +63,7 @@ export const ResultCard = ({ result, isLoading = false }: ResultCardProps) => {
   }
 
   return (
-    <div className="glass-card p-8 rounded-2xl space-y-6 animate-fade-in-up float glow">
+    <div className="rounded-2xl border bg-background p-8 space-y-6 animate-fade-in-up float glow">
       {/* Header */}
       <div className="text-center space-y-2">
         <h3 className="text-2xl font-bold text-primary-glow">
@@ -73,12 +73,9 @@ export const ResultCard = ({ result, isLoading = false }: ResultCardProps) => {
       </div>
 
       {/* Main Date Display */}
-      <div className="text-center space-y-4">
-        <div className="text-4xl font-bold text-foreground">
-          {result.javanese.date}
-        </div>
-        <div className="text-xl font-semibold text-primary">
-          {result.javanese.month}
+      <div className="text-center space-y-1">
+        <div className="text-3xl md:text-4xl font-bold text-foreground">
+          {result.javanese.date} {result.javanese.month} {result.javanese.year}
         </div>
       </div>
 

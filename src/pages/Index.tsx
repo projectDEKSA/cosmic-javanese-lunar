@@ -64,7 +64,7 @@ const Index = () => {
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-12">
         <div className="flex justify-end mb-6">
-          <button onClick={handleThemeToggle} className="inline-flex items-center gap-2 rounded-md border bg-card px-3 py-2 text-sm">
+          <button onClick={handleThemeToggle} className="inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm">
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             <span className="sr-only">Toggle theme</span>
           </button>
@@ -83,7 +83,7 @@ const Index = () => {
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 mb-16">
           {/* Input Section */}
           <div className="space-y-6">
-            <div className="p-6 md:p-8 rounded-xl border bg-card shadow-sm">
+            <div className="p-6 md:p-8 rounded-xl border bg-background shadow-sm">
               <h2 className="text-2xl font-semibold mb-6 text-center text-foreground">
                 Date Converter
               </h2>

@@ -34,7 +34,7 @@ export const InfoCards = () => {
       {infoData.map((info, index) => (
         <Card 
           key={info.title} 
-          className="glass-card hover:glow transition-all duration-500 cursor-pointer group"
+          className="hover:glow transition-all duration-500 cursor-pointer group"
           style={{ animationDelay: `${index * 0.2}s` }}
         >
           <CardHeader className="pb-3">

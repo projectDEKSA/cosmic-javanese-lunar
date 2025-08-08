@@ -53,7 +53,7 @@ export const DateInput = ({ value, onChange, onToday }: DateInputProps) => {
       <Button 
         onClick={handleTodayClick}
         variant="outline" 
-        className="w-full glass-card hover:bg-primary/10 transition-all duration-300 hover:shadow-lg"
+        className="w-full hover:bg-primary/10 transition-all duration-300 hover:shadow-lg"
       >
         <Calendar className="w-4 h-4 mr-2" />
         Today's Date

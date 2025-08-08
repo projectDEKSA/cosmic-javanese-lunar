@@ -254,7 +254,7 @@ export class JavaneseCalendarConverter {
     wukuInfo: WukuCalculation, 
     windu: string
   ): string {
-    return `${javaneseInfo.date} ${javaneseInfo.month}, ${dayName} ${pasaran}, ${javaneseInfo.yearType}, ${windu}, ${wukuInfo.wuku} ${wukuInfo.wukuDay}`;
+    return `${javaneseInfo.date} ${javaneseInfo.month} ${javaneseInfo.yearNumber}, ${dayName} ${pasaran}, ${javaneseInfo.yearType}, ${windu}, ${wukuInfo.wuku} ${wukuInfo.wukuDay}`;
   }
 
   /**
