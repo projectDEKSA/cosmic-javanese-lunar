@@ -6,43 +6,43 @@
 
 @layer base {
   :root {
-    /* Mystical background gradient */
-    --background: 240 15% 8%;
-    --background-secondary: 250 20% 12%;
-    --foreground: 240 20% 95%;
+    /* Light theme (default) */
+    --background: 0 0% 100%;
+    --background-secondary: 0 0% 98%;
+    --foreground: 222.2 47.4% 11.2%;
 
-    /* Glass card system */
-    --card: 240 15% 8% / 0.3;
-    --card-border: 240 30% 30% / 0.2;
-    --card-foreground: 240 20% 95%;
+    /* Card system */
+    --card: 0 0% 100%;
+    --card-border: 220 13% 91%;
+    --card-foreground: 222.2 47.4% 11.2%;
 
-    --popover: 240 15% 10% / 0.95;
-    --popover-foreground: 240 20% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
 
-    /* Mystical primary colors */
-    --primary: 270 70% 65%;
-    --primary-glow: 280 80% 75%;
-    --primary-foreground: 240 20% 95%;
+    /* Brand colors */
+    --primary: 270 70% 50%;
+    --primary-glow: 280 80% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Secondary mystical tones */
-    --secondary: 250 30% 20% / 0.6;
-    --secondary-foreground: 240 20% 90%;
+    /* Secondary */
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 240 15% 15% / 0.5;
-    --muted-foreground: 240 10% 70%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-    /* Accent colors for calendar elements */
-    --accent: 290 60% 55%;
+    /* Accent */
+    --accent: 240 4.8% 95.9%;
     --accent-glow: 300 70% 70%;
-    --accent-foreground: 240 20% 95%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
-    --destructive: 0 70% 60%;
-    --destructive-foreground: 240 20% 95%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 240 30% 25% / 0.3;
-    --input: 240 20% 15% / 0.7;
-    --input-border: 240 40% 40% / 0.4;
-    --ring: 270 70% 65%;
+    --border: 220 13% 91%;
+    --input: 240 4.8% 95.9%;
+    --input-border: 220 13% 91%;
+    --ring: 217.2 91.2% 59.8%;
 
     /* Custom mystical variables */
     --starfield: 240 50% 80% / 0.6;
@@ -125,7 +125,6 @@
 
   body {
     @apply bg-background text-foreground;
-    background: var(--gradient-bg);
     min-height: 100vh;
     overflow-x: hidden;
   }

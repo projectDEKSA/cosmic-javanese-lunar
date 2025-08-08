@@ -21,6 +21,7 @@ export interface JavaneseInfo {
   date: number;
   month: string;
   yearType: string;
+  year: number;
   windu: string;
 }
 
@@ -60,6 +61,7 @@ interface JavaneseDateInfo {
   yearType: string;
   yearIndex: number;
   monthIndex: number;
+  yearNumber: number;
 }
 
 export class JavaneseCalendarConverter {
@@ -75,7 +77,7 @@ export class JavaneseCalendarConverter {
   ] as const;
 
   public static readonly WINDU_TYPES = [
-    "Sancaya", "Adi", "Kuntara", "Sengara"
+    "Adi", "Kuntara", "Sengara", "Sancaya"
   ] as const;
 
   public static readonly MONTHS = [
@@ -114,7 +116,7 @@ export class JavaneseCalendarConverter {
     pasaranIndex: 4,  // Pon
     yearIndex: 0,  // Alip
     wukuIndex: 27,  // Kulawu (index 27 in 0-based array)
-    wukuDayIndex: 1  // Selasa (index 1 in wuku days)
+    wukuDayIndex: 2  // Selasa (index 2 in wuku days)
   };
 
   /**
@@ -183,6 +185,8 @@ export class JavaneseCalendarConverter {
     let yearIndex = ref.yearIndex;
     let monthIndex = ref.monthIndex;
     let date = ref.date;
+    // Absolute Javanese year number aligned with reference year 1955 (AJ)
+    let yearNumber = 1955;
     
     let currentDays = daysDiff;
     
@@ -198,8 +202,8 @@ export class JavaneseCalendarConverter {
           monthIndex = (monthIndex - 1 + 12) % 12;
           if (monthIndex === 11) { // Wrapped around, go to previous year
             yearIndex = (yearIndex - 1 + 8) % 8;
+            yearNumber -= 1;
           }
-          
           const yearType = JavaneseCalendarConverter.YEAR_TYPES[yearIndex];
           const month = JavaneseCalendarConverter.MONTHS[monthIndex];
           date = this.getMonthDays(month, yearType);
@@ -224,6 +228,7 @@ export class JavaneseCalendarConverter {
           
           if (monthIndex === 0) { // Wrapped around, go to next year
             yearIndex = (yearIndex + 1) % 8;
+            yearNumber += 1;
           }
         }
       }
@@ -234,7 +239,8 @@ export class JavaneseCalendarConverter {
       month: JavaneseCalendarConverter.MONTHS[monthIndex],
       yearType: JavaneseCalendarConverter.YEAR_TYPES[yearIndex],
       yearIndex,
-      monthIndex
+      monthIndex,
+      yearNumber
     };
   }
 
@@ -317,6 +323,7 @@ export class JavaneseCalendarConverter {
         date: javaneseInfo.date,
         month: javaneseInfo.month,
         yearType: javaneseInfo.yearType,
+        year: javaneseInfo.yearNumber,
         windu
       },
       cycles: {
