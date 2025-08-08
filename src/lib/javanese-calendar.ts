@@ -336,6 +336,85 @@ export class JavaneseCalendarConverter {
   }
 
   /**
+   * Convert a Javanese date (AJ) to Gregorian and full details
+   */
+  public convertFromJavanese(input: { date: number; month: JavaneseMonth; year: number }): JavaneseCalendarResult {
+    const REF_YEAR = 1955;
+    const ref = JavaneseCalendarConverter.REFERENCE_JAVANESE;
+
+    // Build target in indexes
+    const target = {
+      date: input.date,
+      monthIndex: JavaneseCalendarConverter.MONTHS.indexOf(input.month),
+      yearNumber: input.year,
+    };
+
+    if (target.monthIndex < 0) {
+      throw new Error('Invalid Javanese month');
+    }
+
+    // Initialize current at reference
+    let curDate = ref.date;
+    let curMonthIndex = ref.monthIndex;
+    let curYearIndex = ref.yearIndex;
+    let curYearNumber = REF_YEAR;
+
+    // Helper to compare current to target
+    const isEqual = () => curDate === target.date && curMonthIndex === target.monthIndex && curYearNumber === target.yearNumber;
+    const isBefore = () => {
+      if (curYearNumber !== target.yearNumber) return curYearNumber < target.yearNumber;
+      if (curMonthIndex !== target.monthIndex) return curMonthIndex < target.monthIndex;
+      return curDate < target.date;
+    };
+
+    let daysDiff = 0;
+
+    if (!isEqual()) {
+      if (isBefore()) {
+        // Move forward day by day
+        while (!isEqual()) {
+          const yearType = JavaneseCalendarConverter.YEAR_TYPES[curYearIndex] as string;
+          const monthName = JavaneseCalendarConverter.MONTHS[curMonthIndex] as string;
+          const monthDays = this.getMonthDays(monthName, yearType);
+          if (curDate < monthDays) {
+            curDate += 1;
+          } else {
+            // Next month
+            curDate = 1;
+            curMonthIndex = (curMonthIndex + 1) % 12;
+            if (curMonthIndex === 0) {
+              curYearIndex = (curYearIndex + 1) % 8;
+              curYearNumber += 1;
+            }
+          }
+          daysDiff += 1;
+        }
+      } else {
+        // Move backward day by day
+        while (!isEqual()) {
+          if (curDate > 1) {
+            curDate -= 1;
+          } else {
+            // Previous month
+            curMonthIndex = (curMonthIndex - 1 + 12) % 12;
+            if (curMonthIndex === 11) {
+              curYearIndex = (curYearIndex - 1 + 8) % 8;
+              curYearNumber -= 1;
+            }
+            const yearType = JavaneseCalendarConverter.YEAR_TYPES[curYearIndex] as string;
+            const monthName = JavaneseCalendarConverter.MONTHS[curMonthIndex] as string;
+            curDate = this.getMonthDays(monthName, yearType);
+          }
+          daysDiff -= 1;
+        }
+      }
+    }
+
+    const gregorianDate = new Date(JavaneseCalendarConverter.REFERENCE_DATE.getTime() + daysDiff * 24 * 60 * 60 * 1000);
+    return this.convert(gregorianDate);
+  }
+
+  /**
    * Get current date in Javanese calendar
    */
   public getCurrentJavaneseDate(): JavaneseCalendarResult {
