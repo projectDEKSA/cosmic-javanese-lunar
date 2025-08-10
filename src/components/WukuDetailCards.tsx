@@ -76,8 +76,8 @@ export const WukuDetailCards: React.FC<Props> = ({ wuku }) => {
 };
 
 const InfoRow = ({ label, value }: { label: string; value: string }) => (
-  <div className="flex gap-2">
-    <span className="w-48 shrink-0 text-muted-foreground">{label}</span>
+  <div className="flex flex-col gap-1 md:flex-row md:gap-2">
+    <span className="text-muted-foreground md:w-48 md:shrink-0">{label}</span>
     <span className="text-foreground">{value}</span>
   </div>
 );
