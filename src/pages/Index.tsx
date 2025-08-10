@@ -4,6 +4,7 @@ import { Sun, Moon } from 'lucide-react';
 import { DateInput } from '@/components/DateInput';
 import { ResultCard } from '@/components/ResultCard';
 import { InfoCards } from '@/components/InfoCards';
+import { WukuDetailCards } from '@/components/WukuDetailCards';
 import { javaneseCalendar, JavaneseCalendarResult } from '@/lib/javanese-calendar';
 
 const Index = () => {
@@ -100,6 +101,16 @@ const Index = () => {
             <ResultCard result={result} isLoading={isLoading} />
           </div>
         </div>
+
+        {/* Wuku Information Section */}
+        {result?.cycles?.wuku && (
+          <section aria-labelledby="wuku-info" className="mb-16">
+            <h2 id="wuku-info" className="text-3xl font-bold text-center mb-8 text-foreground">
+              Wuku Information
+            </h2>
+            <WukuDetailCards wuku={result.cycles.wuku as any} />
+          </section>
+        )}
 
         {/* Information Cards */}
         <div className="mb-16">

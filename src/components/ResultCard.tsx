@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { JavaneseCalendarResult } from '@/lib/javanese-calendar';
 import { useToast } from '@/hooks/use-toast';
-import { WukuDetailCards } from '@/components/WukuDetailCards';
+
 
 interface ResultCardProps {
   result: JavaneseCalendarResult | null;
@@ -123,10 +123,6 @@ export const ResultCard = ({ result, isLoading = false }: ResultCardProps) => {
         </p>
       </div>
 
-      {/* Wuku Details */}
-      <div className="pt-2">
-        <WukuDetailCards wuku={result.cycles.wuku as any} />
-      </div>
 
       {/* Copy Button */}
       <Button 
