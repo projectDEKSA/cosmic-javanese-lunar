@@ -7,10 +7,11 @@ const NavBar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-      <nav className="container mx-auto flex h-14 items-center justify-between px-4">
-        <Link to="/" className="font-semibold tracking-tight text-foreground">
-          Javanese Calendar
+    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
+      <nav className="container mx-auto flex h-14 items-center justify-between px-4 gap-4 sm:gap-6">
+        <Link to="/" className="flex items-center gap-2" aria-label="Javanese Calendar Home">
+          <img src="/lovable-uploads/e8f564c6-a7fa-4323-8644-1e2b6a4a0aed.png" alt="Javanese Calendar logo" className="h-7 w-7 filter dark:invert" loading="eager" decoding="async" />
+          <span className="sr-only">Javanese Calendar</span>
         </Link>
         <NavigationMenu>
           <NavigationMenuList>
@@ -23,7 +24,7 @@ const NavBar = () => {
                     isActive("/") ? "bg-accent text-accent-foreground" : "hover:bg-accent hover:text-accent-foreground"
                   )}
                 >
-                  Home
+                  Converter
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -36,7 +37,7 @@ const NavBar = () => {
                     isActive("/month") ? "bg-accent text-accent-foreground" : "hover:bg-accent hover:text-accent-foreground"
                   )}
                 >
-                  Monthly Calendar
+                  Calendar
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>

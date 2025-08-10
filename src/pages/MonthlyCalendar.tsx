@@ -107,30 +107,27 @@ export default function MonthlyCalendar() {
         </div>
       </div>
 
-      <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="mt-6">
         <Card>
           <CardHeader className="py-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Windu</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Javanese Calendar Info</CardTitle>
           </CardHeader>
-          <CardContent className="pt-0 text-lg text-foreground">{monthInfo.windu}</CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="py-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Javanese Year</CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0 text-lg text-foreground">{monthInfo.jYear}</CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="py-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Year Type</CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0 text-lg text-foreground">{monthInfo.yearType}</CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="py-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Javanese Months (span)</CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0 text-lg text-foreground">{monthSpanLabel}</CardContent>
+          <CardContent className="pt-0 text-sm text-muted-foreground">
+            <div className="grid gap-2 sm:grid-cols-2">
+              <div>
+                <span className="font-medium text-foreground">Windu:</span> <span>{monthInfo.windu}</span>
+              </div>
+              <div>
+                <span className="font-medium text-foreground">Javanese Year:</span> <span>{monthInfo.jYear}</span>
+              </div>
+              <div>
+                <span className="font-medium text-foreground">Year Type:</span> <span>{monthInfo.yearType}</span>
+              </div>
+              <div>
+                <span className="font-medium text-foreground">Javanese Months:</span> <span>{monthSpanLabel}</span>
+              </div>
+            </div>
+          </CardContent>
         </Card>
       </section>
 
