@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
-import { Sun, Moon } from 'lucide-react';
 import { DateInput } from '@/components/DateInput';
 import { ResultCard } from '@/components/ResultCard';
 import { InfoCards } from '@/components/InfoCards';
 import { WukuDetailCards } from '@/components/WukuDetailCards';
+import { Footer } from '@/components/Footer';
+import { ThemeLanguageToggle } from '@/components/ThemeLanguageToggle';
 import { javaneseCalendar, JavaneseCalendarResult } from '@/lib/javanese-calendar';
 
 const Index = () => {
@@ -30,8 +31,8 @@ const Index = () => {
   const convertDate = async (dateString: string) => {
     setIsLoading(true);
     try {
-      // Add a small delay for smooth UX
-      await new Promise(resolve => setTimeout(resolve, 300));
+      // Use requestAnimationFrame for better performance
+      await new Promise(resolve => requestAnimationFrame(resolve));
       const converted = javaneseCalendar.convert(dateString);
       setResult(converted);
     } catch (error) {
@@ -59,16 +60,13 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative flex flex-col">
       
       
       {/* Hero Section */}
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-12 flex-1">
         <div className="flex justify-end mb-6">
-          <button onClick={handleThemeToggle} className="inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm">
-            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-            <span className="sr-only">Toggle theme</span>
-          </button>
+          <ThemeLanguageToggle theme={theme} onThemeToggle={handleThemeToggle} />
         </div>
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-7xl font-bold font-mystical mb-6 bg-gradient-to-r from-primary via-accent to-primary-glow bg-clip-text text-transparent">
@@ -120,6 +118,8 @@ const Index = () => {
           <InfoCards />
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };

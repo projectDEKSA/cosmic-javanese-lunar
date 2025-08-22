@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { SEO } from "@/components/SEO";
+import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -88,8 +89,9 @@ export default function MonthlyCalendar() {
   const pageDescription = "View Gregorian month with Javanese pasaran, date+month, and weekly Wuku.";
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <SEO title={pageTitle} description={pageDescription} canonical={typeof window !== 'undefined' ? `${window.location.origin}/month` : undefined} />
+    <div className="min-h-screen flex flex-col">
+      <main className="container mx-auto px-4 py-8 flex-1">
+        <SEO title={pageTitle} description={pageDescription} canonical={typeof window !== 'undefined' ? `${window.location.origin}/month` : undefined} />
 
       <h1 className="text-3xl font-semibold tracking-tight text-foreground">Javanese Monthly Calendar</h1>
       <p className="mt-2 text-muted-foreground">Pick any month and year to see the full Gregorian calendar enriched with Javanese details.</p>
@@ -168,6 +170,9 @@ export default function MonthlyCalendar() {
           </Table>
         </ScrollArea>
       </section>
-    </main>
+      </main>
+      
+      <Footer />
+    </div>
   );
 }

@@ -77,7 +77,7 @@ export class JavaneseCalendarConverter {
   ] as const;
 
   public static readonly WINDU_TYPES = [
-    "Adi", "Kuntara", "Sengara", "Sancaya"
+    "Kuntara", "Sengara", "Sancaya", "Adi"
   ] as const;
 
   public static readonly MONTHS = [
@@ -261,39 +261,40 @@ export class JavaneseCalendarConverter {
    * Convert a Gregorian date to Javanese calendar format
    */
   public convert(dateInput: string | Date): JavaneseCalendarResult {
-    // Parse input date
+    // Parse input date - optimized for performance
     let gregorianDate: Date;
     
     if (typeof dateInput === 'string') {
-      // Handle various date formats
-      const dateRegex = /^(\d{4})-(\d{2})-(\d{2})$/;
-      const match = dateInput.match(dateRegex);
-      
-      if (!match) {
+      // Fast path for common ISO format
+      if (dateInput.length === 10 && dateInput[4] === '-' && dateInput[7] === '-') {
+        const year = parseInt(dateInput.slice(0, 4), 10);
+        const month = parseInt(dateInput.slice(5, 7), 10) - 1;
+        const day = parseInt(dateInput.slice(8, 10), 10);
+        
+        // Quick validation
+        if (year >= 1000 && year <= 9999 && month >= 0 && month <= 11 && day >= 1 && day <= 31) {
+          gregorianDate = new Date(year, month, day);
+          
+          // Final validation only if quick checks pass
+          if (gregorianDate.getFullYear() !== year || 
+              gregorianDate.getMonth() !== month || 
+              gregorianDate.getDate() !== day) {
+            throw new Error("Invalid date");
+          }
+        } else {
+          throw new Error("Invalid date");
+        }
+      } else {
         throw new Error("Date must be in YYYY-MM-DD format");
-      }
-      
-      const year = parseInt(match[1], 10);
-      const month = parseInt(match[2], 10) - 1; // Month is 0-based
-      const day = parseInt(match[3], 10);
-      
-      gregorianDate = new Date(year, month, day);
-      
-      // Validate the date
-      if (gregorianDate.getFullYear() !== year || 
-          gregorianDate.getMonth() !== month || 
-          gregorianDate.getDate() !== day) {
-        throw new Error("Invalid date");
       }
     } else {
       gregorianDate = new Date(dateInput);
     }
     
-    // Calculate days difference from reference
-    const daysDiff = Math.floor(
-      (gregorianDate.getTime() - JavaneseCalendarConverter.REFERENCE_DATE.getTime()) / 
-      (1000 * 60 * 60 * 24)
-    );
+    // Calculate days difference from reference - using integer math for better performance
+    const refTime = JavaneseCalendarConverter.REFERENCE_DATE.getTime();
+    const inputTime = gregorianDate.getTime();
+    const daysDiff = Math.floor((inputTime - refTime) / 86400000); // 1000*60*60*24 = 86400000
     
     // Get basic day info
     const dayName = JavaneseCalendarConverter.DAY_NAMES[gregorianDate.getDay() === 0 ? 6 : gregorianDate.getDay() - 1];
