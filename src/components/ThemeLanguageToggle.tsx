@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
 import { Sun, Moon, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ThemeLanguageToggleProps {
   theme: 'light' | 'dark';
@@ -9,17 +9,7 @@ interface ThemeLanguageToggleProps {
 }
 
 export const ThemeLanguageToggle = ({ theme, onThemeToggle }: ThemeLanguageToggleProps) => {
-  const [language, setLanguage] = useState<'en' | 'id'>(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('language');
-      return (stored === 'en' || stored === 'id') ? stored : 'en';
-    }
-    return 'en';
-  });
-
-  useEffect(() => {
-    localStorage.setItem('language', language);
-  }, [language]);
+  const { language, setLanguage } = useLanguage();
 
   const handleLanguageChange = (lang: 'en' | 'id') => {
     setLanguage(lang);

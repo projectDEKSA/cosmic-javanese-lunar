@@ -7,6 +7,8 @@ import { WukuDetailCards } from '@/components/WukuDetailCards';
 import { Footer } from '@/components/Footer';
 import { ThemeLanguageToggle } from '@/components/ThemeLanguageToggle';
 import { javaneseCalendar, JavaneseCalendarResult } from '@/lib/javanese-calendar';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslations } from '@/hooks/useTranslations';
 
 const Index = () => {
   const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
@@ -20,6 +22,9 @@ const Index = () => {
     }
     return 'light';
   });
+
+  const { language } = useLanguage();
+  const { t } = useTranslations(language);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
@@ -70,11 +75,10 @@ const Index = () => {
         </div>
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-7xl font-bold font-mystical mb-6 bg-gradient-to-r from-primary via-accent to-primary-glow bg-clip-text text-transparent">
-            Javanese Calendar
+            {t('heroTitle')}
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Discover the mystical wisdom of traditional Javanese timekeeping. 
-            Convert modern dates to ancient cycles of cosmic harmony.
+            {t('heroSubtitle')}
           </p>
         </div>
 
@@ -84,7 +88,7 @@ const Index = () => {
           <div className="space-y-6">
             <div className="p-6 md:p-8 rounded-xl border bg-background shadow-sm">
               <h2 className="text-2xl font-semibold mb-6 text-center text-foreground">
-                Date Converter
+                {t('dateConverter')}
               </h2>
               <DateInput 
                 value={selectedDate}
@@ -104,7 +108,7 @@ const Index = () => {
         {result?.cycles?.wuku && (
           <section aria-labelledby="wuku-info" className="mb-16">
             <h2 id="wuku-info" className="text-3xl font-bold text-center mb-8 text-foreground">
-              Wuku Information
+              {t('wukuInfo')}
             </h2>
             <WukuDetailCards wuku={result.cycles.wuku as any} />
           </section>
@@ -113,7 +117,7 @@ const Index = () => {
         {/* Information Cards */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-8 text-foreground">
-            Understanding the Cycles
+            {t('understandingCycles')}
           </h2>
           <InfoCards />
         </div>

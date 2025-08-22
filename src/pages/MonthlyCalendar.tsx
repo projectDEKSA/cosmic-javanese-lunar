@@ -5,8 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { javaneseCalendar } from "@/lib/javanese-calendar";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useTranslations } from "@/hooks/useTranslations";
 
-const dayHeaders = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const getDayHeaders = (language: 'en' | 'id') => {
+  return language === 'id' 
+    ? ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"]
+    : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+};
 
 function formatMonthInput(date: Date) {
   const y = date.getFullYear();
@@ -30,6 +36,8 @@ interface DayCellData {
 export default function MonthlyCalendar() {
   const [monthValue, setMonthValue] = useState<string>(() => formatMonthInput(new Date()));
   const { year, monthIndex } = useMemo(() => parseMonthInput(monthValue), [monthValue]);
+  const { language } = useLanguage();
+  const { t, getNestedTranslation } = useTranslations(language);
 
   const firstOfMonth = useMemo(() => new Date(year, monthIndex, 1), [year, monthIndex]);
   const lastOfMonth = useMemo(() => new Date(year, monthIndex + 1, 0), [year, monthIndex]);
@@ -85,20 +93,28 @@ export default function MonthlyCalendar() {
     return `${span[0]} – ${span[span.length - 1]}`;
   }, [grid.monthSpan]);
 
-  const pageTitle = `Monthly Javanese Calendar – ${firstOfMonth.toLocaleString(undefined, { month: 'long' })} ${year}`;
-  const pageDescription = "View Gregorian month with Javanese pasaran, date+month, and weekly Wuku.";
+  const monthName = firstOfMonth.toLocaleString(language === 'id' ? 'id-ID' : 'en-US', { month: 'long' });
+  const pageTitle = `${t('monthlyCalendar')} – ${monthName} ${year}`;
+  const pageDescription = language === 'id' 
+    ? "Lihat bulan Gregorian dengan pasaran Jawa, tanggal+bulan, dan Wuku mingguan."
+    : "View Gregorian month with Javanese pasaran, date+month, and weekly Wuku.";
 
   return (
     <div className="min-h-screen flex flex-col">
       <main className="container mx-auto px-4 py-8 flex-1">
         <SEO title={pageTitle} description={pageDescription} canonical={typeof window !== 'undefined' ? `${window.location.origin}/month` : undefined} />
 
-      <h1 className="text-3xl font-semibold tracking-tight text-foreground">Javanese Monthly Calendar</h1>
-      <p className="mt-2 text-muted-foreground">Pick any month and year to see the full Gregorian calendar enriched with Javanese details.</p>
+      <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t('monthlyCalendar')}</h1>
+      <p className="mt-2 text-muted-foreground">
+        {language === 'id' 
+          ? "Pilih bulan dan tahun mana pun untuk melihat kalender Gregorian lengkap yang diperkaya dengan detail Jawa."
+          : "Pick any month and year to see the full Gregorian calendar enriched with Javanese details."
+        }
+      </p>
 
       <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-end">
         <div>
-          <label htmlFor="month" className="block text-sm text-muted-foreground">Select month</label>
+          <label htmlFor="month" className="block text-sm text-muted-foreground">{t('selectMonth')}</label>
           <input
             id="month"
             type="month"
@@ -112,21 +128,23 @@ export default function MonthlyCalendar() {
       <section className="mt-6">
         <Card>
           <CardHeader className="py-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Javanese Calendar Info</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              {language === 'id' ? "Info Kalender Jawa" : "Javanese Calendar Info"}
+            </CardTitle>
           </CardHeader>
           <CardContent className="pt-0 text-sm text-muted-foreground">
             <div className="grid gap-2 sm:grid-cols-2">
               <div>
-                <span className="font-medium text-foreground">Windu:</span> <span>{monthInfo.windu}</span>
+                <span className="font-medium text-foreground">{t('winduCycle')}:</span> <span>{monthInfo.windu}</span>
               </div>
               <div>
-                <span className="font-medium text-foreground">Javanese Year:</span> <span>{monthInfo.jYear}</span>
+                <span className="font-medium text-foreground">{t('javaneseYear')}:</span> <span>{monthInfo.jYear}</span>
               </div>
               <div>
-                <span className="font-medium text-foreground">Year Type:</span> <span>{monthInfo.yearType}</span>
+                <span className="font-medium text-foreground">{t('yearType')}:</span> <span>{monthInfo.yearType}</span>
               </div>
               <div>
-                <span className="font-medium text-foreground">Javanese Months:</span> <span>{monthSpanLabel}</span>
+                <span className="font-medium text-foreground">{t('javaneseMonths')}:</span> <span>{monthSpanLabel}</span>
               </div>
             </div>
           </CardContent>
@@ -138,8 +156,8 @@ export default function MonthlyCalendar() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-36">Wuku</TableHead>
-                {dayHeaders.map((d) => (
+                <TableHead className="w-36">{t('wuku')}</TableHead>
+                {getDayHeaders(language).map((d) => (
                   <TableHead key={d} className="text-center">{d}</TableHead>
                 ))}
               </TableRow>
